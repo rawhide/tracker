@@ -5,17 +5,21 @@ module Tracker
   class CLI < Thor
     #default_command :trace
 
-    desc "trace", "TODO: run tracking no trace."
     method_option :force, type: :boolean, aliases: '-f'
     method_option :verbose, type: :boolean, aliases: '-v'
     option :number, type: :string, aliases: '-n', desc: 'tracking number', required: true
-    option :shipper, type: :string, aliases: '-s', desc: 'shipping company'
+    option :company, type: :string, aliases: '-c', desc: 'shipping company'
+    desc "trace usage", "TODO: run tracking no trace."
+    # 荷物を追跡するためのコマンドライン用メソッド
+    # @return [String] json string
+    # @example
+    #   bundle exec bin/tracker trace -n 123412341231 -c sagawa
     def trace
       no = options[:number]
-      result = Tracker::Test.execute(no)
+      result = Tracker::Base.execute(no: options[:number], company: options[:company])
       say("input: #{no}", :yellow)
       say("output: #{result}", :yellow)
-      say("shipping company: #{options[:shipper]}") if options[:shipper]
+      say("shipping company: #{options[:company]}") if options[:company]
       say("verbose", :blue) if options[:verbose]
     end
   end
