@@ -1,4 +1,3 @@
-require 'tracker/api/const/sagawa'
 require 'tracker/api/builder'
 require 'tracker/api/implementation'
 require 'nokogiri'
@@ -76,18 +75,6 @@ module Tracker
 
         self
       end
-
-      private
-      # @api private
-      def param_jsf_tree_64
-        @data << ["jsf_tree_64", Tracker::Api::Const::Sagawa::TREE]
-      end
-      
-      # @api private
-      def param_jsf_state_64
-        @data << ["jsf_state_64", Tracker::Api::Const::Sagawa::STATE]
-      end
-
 
     end
   end
