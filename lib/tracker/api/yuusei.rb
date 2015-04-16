@@ -10,13 +10,12 @@ module Tracker
       include Tracker::Api::Implementation
 
       def build_param
-        (2..10).each {|i| @data << ["requestNo#{i}", ""] }
-        @data << ["search.x", 114]
-        @data << ["search.y", 23]
-        @data << ["search", "追跡スタート"]
-        @data << ["startingUrlPatten", ""]
+        # ?org.apache.struts.taglib.html.TOKEN=&searchKind=S002&locale=ja&SVID=&reqCodeNo1=123312341231
+        @data << ["org.apache.struts.taglib.html.TOKEN", ""]
+        @data << ["searchKind", "S002"]
+        @data << ["SVID", ""]
         @data << ["locale", "ja"]
-        @data << ["requestNo1", @no]
+        @data << ["reqCodeNo1", @no]
 
         self
       end
@@ -27,7 +26,8 @@ module Tracker
       end
 
       def send_data
-        host = "https://trackings.post.japanpost.jp/services/srv/search/"
+        #host = "https://trackings.post.japanpost.jp/services/srv/search/"
+        host = "https://trackings.post.japanpost.jp/services/srv/search/direct"
         @url = "#{host}?#{@uri}"
         @html = Net::HTTP.get(URI.parse(@url))
 
@@ -48,6 +48,7 @@ module Tracker
           config.noblanks
         end
 
+        # table[@class="tableType01 txt_c m_b5"]
         @doc.search('table[@summary="照会結果"]').each do |node|
 
           if node.search('tr')[2].css('td').size == 2

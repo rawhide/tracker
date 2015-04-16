@@ -24,8 +24,7 @@ describe Tracker::Api::Sagawa do
   describe "#build_param" do
     subject { sagawa.build_param }
     it { expect(subject.data).not_to be_empty }
-    it { expect(subject.data).to include ["main:no1", "432143214321"] }
-    it { expect(subject.data.size).to eq 17 }
+    it { expect(subject.data).to include ["okurijoNo", "432143214321"] }
   end
 
   describe "#create_form" do
@@ -36,7 +35,7 @@ describe Tracker::Api::Sagawa do
     context "does not empty" do
       subject { sagawa.build_param.create_form }
       it { expect(subject.uri).not_to be_empty }
-      it { expect(subject.uri).to match "&main%3Ano1=432143214321" }
+      it { expect(subject.uri).to match "okurijoNo=432143214321" }
     end
   end
 

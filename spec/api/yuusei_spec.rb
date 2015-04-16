@@ -24,13 +24,13 @@ describe Tracker::Api::Yuusei do
 
   describe "#build_param" do
     subject { yuusei.build_param }
-    it { expect(subject.data).to include ["requestNo1", "123412341231"] }
+    it { expect(subject.data).to include ["reqCodeNo1", "123412341231"] }
   end
 
   describe "#create_form" do
     subject { yuusei.build_param.create_form }
     it { expect(subject.uri).not_to be_empty }
-    it { expect(subject.uri).to match "&requestNo1=123412341231" }
+    it { expect(subject.uri).to match "&reqCodeNo1=123412341231" }
   end
 
 end

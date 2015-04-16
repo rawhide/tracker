@@ -12,15 +12,7 @@ module Tracker
 
       def build_param
         @data = []
-        param_jsf_tree_64
-        param_jsf_state_64
-        @data << ["jsf_viewid", "/web/okurijoinput.jsp"]
-        (2..10).each {|i| @data << ["main:no#{i}", ""] }
-        @data << ["main:toiStart", ""]
-        @data << ["main:correlation", "1"]
-        @data << ["main_SUBMIT", "1"]
-        @data << ["main:_link_hidden_", ""]
-        @data << ["main:no1", @no]
+        @data << ["okurijoNo", @no]
 
         self
       end
@@ -32,7 +24,8 @@ module Tracker
       end
 
       def send_data
-        host = "http://k2k.sagawa-exp.co.jp/p/sagawa/web/okurijoinput.jsp"
+        #host = "http://k2k.sagawa-exp.co.jp/p/sagawa/web/okurijoinput.jsp"
+        host = "http://k2k.sagawa-exp.co.jp/p/web/okurijosearch.do"
         @url = "#{host}?#{@uri}"
         @html = Net::HTTP.get(URI.parse(@url))
 
