@@ -1,7 +1,5 @@
 # Tracker
 
-TODO: Write a gem description
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -20,7 +18,28 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+console.
+```ruby
+bundle exec bin/tracker trace -n 123412341231 -c sagawa
+> # return json text
+```
+options -c [yamato|sagawa|yuusei|seinou]
+
+
+rails etc.
+```ruby
+def index
+  str = Tracker::Base.execute no: "123412341231", company: "sagawa"
+  obj = JSON.parse(str)
+end
+```
+
+generate document.
+```ruby
+(gem install yard)
+yard lib/*
+open lib/index.html
+```
 
 ## Contributing
 
