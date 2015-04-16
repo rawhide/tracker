@@ -25,7 +25,7 @@ module Tracker # :nodoc:
       # 追跡番号の桁数チェック
       # @return [Boolean]
       def length?
-        return true if @no.length == 12
+        return true if [10, 12].include?(@no.length)
         @errors << "number of digits does not match." 
         false
       end
@@ -41,6 +41,7 @@ module Tracker # :nodoc:
       # チェックデジット
       # @return [Boolean]
       def checkdigit?
+        return true if @no.length != 12
         last = @no[-1].to_i
         return true if (@no[0..10].to_i % 7) == last
         @errors << "checkdigit does not match." 

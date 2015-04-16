@@ -19,25 +19,36 @@ Or install it yourself as:
 ## Usage
 
 console.
+
 ```ruby
 bundle exec bin/tracker trace -n 123412341231 -c sagawa
 > # return json text
 ```
+
 options -c [yamato|sagawa|yuusei|seinou]
 
 
 rails etc.
+
 ```ruby
 def index
   str = Tracker::Base.execute no: "123412341231", company: "sagawa"
-  obj = JSON.parse(str)
+  ary = JSON.parse(str)
 end
 ```
 
+multiple search.
+
+```ruby
+str = Tracker::Base.execute no: "123412341231"
+ary = JSON.parse(str)
+```
+
 generate document.
+
 ```ruby
 (gem install yard)
-yard lib/*
+yardoc lib/*
 open lib/index.html
 ```
 

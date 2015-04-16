@@ -16,15 +16,22 @@ module Tracker # :nodoc:
     # @param no [String] 追跡番号
     # @param company [String] 運送会社 (yamato, sawaga, yuusei, seinou)
     def self.execute(no: nil, company: nil)
-      company ||= 'yamato'
-      str = "Tracker::Api::#{company.capitalize}"
-      klass = Object.const_get(str)
-
       validate = Tracker::Api::Validation.new no: no
       return "number validation error. #{validate.errors.inspect}" if !validate.valid?
 
-      a = klass.new no: no
-      a.execute
+      data = []
+      coms = ["yamato", "sagawa", "yuusei"]
+      coms = ["seinou"] if no.length == 10
+      companies = company.to_s.empty? ? coms : [company]
+
+      companies.each do |c|
+        str = "Tracker::Api::#{c.capitalize}"
+        klass = Object.const_get(str)
+        a = klass.new no: no
+        data << JSON.parse(a.execute)
+      end
+
+      data.to_json
     end
   end
 end
