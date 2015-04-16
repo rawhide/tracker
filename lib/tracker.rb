@@ -1,5 +1,6 @@
 require "tracker/version"
 require 'tracker/cli'
+require 'json'
 
 require 'tracker/api/validation'
 require 'tracker/api/yamato'
