@@ -19,6 +19,7 @@ describe Tracker::Api::Yuusei do
       it { should include '"company":"yuusei"' }
       it { should match /お問い合わせ番号が見つかりません/ }
       it { expect(JSON.parse(subject)).to be_key "status" }
+      it { expect(JSON.parse(subject)).to be_key "date" }
     end
   end
 

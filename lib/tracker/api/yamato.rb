@@ -36,7 +36,7 @@ module Tracker
 
       def parse_data
         @build = Tracker::Api::Builder.new
-        @doc = Nokogiri::HTML.parse(@html) do |config|
+        @doc = Nokogiri::HTML.parse(@html, nil, "CP932") do |config|
           config.noblanks
         end
 
@@ -64,6 +64,7 @@ module Tracker
 
       def format_data
         @build.company = "yamato"
+        @build.date = Time.now
         @build.place = "" #荷物の場所
 
         self

@@ -16,6 +16,7 @@ describe Tracker::Api::Yamato do
       it { should include '"company":"yamato"' }
       it { should include '"place":""' }
       it { expect(JSON.parse(subject)).to be_key "status" }
+      it { expect(JSON.parse(subject)).to be_key "date" }
     end
   end
 

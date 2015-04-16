@@ -18,6 +18,7 @@ describe Tracker::Api::Sagawa do
       it { should include '"place":""' }
       it { should include '"description":"お問い合わせNo.をお確かめ下さい。"' }
       it { expect(JSON.parse(subject)).to be_key "status" }
+      it { expect(JSON.parse(subject)).to be_key "date" }
     end
   end
 
