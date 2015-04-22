@@ -11,15 +11,11 @@ describe Tracker::Api::Yuusei do
   end
 
   describe "#execute" do
-    context "return json string" do
+    context "ハッシュ配列を返す" do
       subject { yuusei.execute }
-      it { should include '"no":"123412341231"' }
-      it { should include '"status":""' }
-      it { should include '"place":""' }
-      it { should include '"company":"yuusei"' }
-      it { should match /お問い合わせ番号が見つかりません/ }
-      it { expect(JSON.parse(subject)).to be_key "status" }
-      it { expect(JSON.parse(subject)).to be_key "date" }
+      it { should be_a Array }
+      it { expect(subject[0]).to be_key "no" }
+      it { expect(subject[0]).to be_value "123412341231" }
     end
   end
 

@@ -51,6 +51,7 @@ module Tracker
         @build.company = "seinou"
         @build.date = Time.now
         @build.place = ""
+        @details << @build.object_to_hash
 
         self
       end

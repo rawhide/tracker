@@ -81,6 +81,8 @@ module Tracker
         @build.status ||= ""
         @build.place ||= ""
 
+        @details << @build.object_to_hash
+
         self
       end
     end

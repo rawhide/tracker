@@ -72,6 +72,7 @@ module Tracker
         @build.date = Time.now
         @build.place = ""
         #@build.to_json
+        @details << @build.object_to_hash
 
         self
       end

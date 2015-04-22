@@ -17,7 +17,7 @@ module Tracker
     def trace
       no = options[:number]
       result = Tracker::Base.execute(no: options[:number], company: options[:company])
-      say("input: #{no}", :yellow)
+      say("input: #{no}", :red)
       say("output: #{result}", :yellow)
       say("shipping company: #{options[:company]}") if options[:company]
       say("verbose", :blue) if options[:verbose]

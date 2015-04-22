@@ -10,15 +10,16 @@ describe Tracker::Api::Sagawa do
   end
 
   describe "#execute" do
-    context "return json string" do
+    context "ハッシュ配列を返す" do
       subject { sagawa.execute }
-      it { should include '"no":"432143214321"' }
-      it { should include '"status":""' }
-      it { should include '"company":"sagawa"' }
-      it { should include '"place":""' }
-      it { should include '"description":"お問い合わせNo.をお確かめ下さい。"' }
-      it { expect(JSON.parse(subject)).to be_key "status" }
-      it { expect(JSON.parse(subject)).to be_key "date" }
+      it { should be_a Array }
+      it { expect(subject[0]).to be_key "no" }
+      it { expect(subject[0]).to be_key "company" }
+      it { expect(subject[0]).to be_key "status" }
+      it { expect(subject[0]).to be_key "place" }
+      it { expect(subject[0]).to be_value "432143214321" }
+      it { expect(subject[0]).to be_value "sagawa" }
+      it { expect(subject[0]).to be_value "お問い合わせNo.をお確かめ下さい。" }
     end
   end
 
@@ -40,18 +41,4 @@ describe Tracker::Api::Sagawa do
     end
   end
 
-  describe "#send_data" do
-    #subject { sagawa.build_param.create_form.send_data }
-    it {}
-  end
-
-  describe "#parse_data" do
-    #subject { sagawa.build_param.create_form.send_data.parse_data }
-    it {}
-  end
-
-  describe "#format_data" do
-    #subject { sagawa.build_param.create_form.send_data.parse_data.format_data }
-    it {}
-  end
 end
