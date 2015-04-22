@@ -38,13 +38,13 @@ module Tracker # :nodoc:
       # 追跡番号から荷物の状態を検索する
       # @return [Array] in objects Tracker::Api::Builder
       # @example
-      # [
+      #   [
       #   #<Tracker::Api::Builder:0x007fbfd15cfd58>,
       #   #<Tracker::Api::Builder:0x007fbfd0afa450>,
       #   #<Tracker::Api::Builder:0x007fbfd148e958>
-      # ]
-      #  :old:
-      #   {"no":"123412341231","status":"","date":"2015-04-13 13:49:02 +0900","company":"sagawa","description":"お問い合わせのデータは登録されておりません。","origin":null}
+      #   ]
+      #   old:
+      #    {"no":"123412341231","status":"","date":"2015-04-13 13:49:02 +0900","company":"sagawa","description":"お問い合わせのデータは登録されておりません。","origin":null}
       # 
       def execute
         build_param
