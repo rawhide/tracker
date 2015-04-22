@@ -9,14 +9,14 @@ describe Tracker::Api::Yamato do
   end
 
   describe "#execute" do
-    context "return json text" do
+    context "ハッシュ配列を返す" do
       subject { yamato.execute }
-      it { should include '"no":"123412341231"' }
-      it { should include '"status":"伝票番号未登録"' }
-      it { should include '"company":"yamato"' }
-      it { should include '"place":""' }
-      it { expect(JSON.parse(subject)).to be_key "status" }
-      it { expect(JSON.parse(subject)).to be_key "date" }
+      it { should be_a Array }
+      it { expect(subject[0]).to be_key "no" }
+      it { expect(subject[0]).to be_key "company" }
+      it { expect(subject[0]).to be_key "status" }
+      it { expect(subject[0]).to be_value "123412341231" }
+      it { expect(subject[0]).to be_value "yamato" }
     end
   end
 

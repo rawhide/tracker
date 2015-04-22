@@ -40,6 +40,7 @@ module Tracker
           config.noblanks
         end
 
+        # 最新の情報を取得する
         @doc.search('table[@class="saisin"]').each do |node|
           node.search('tr').each_with_index do |tr, i|
             case i
@@ -59,6 +60,33 @@ module Tracker
           end
         end
 
+        # 明細行があればすべての明細を取得する
+        @doc.search('table[@class="meisai"]').each do |node|
+          node.css('tr').each do |tr|
+
+            build = Tracker::Api::Builder.new
+            build.no = @no
+            tr.css('td').each_with_index do |n, i|
+              case i
+              when 0 #経過
+              when 1 #状態
+                build.status = n.text
+              when 2 #日付
+                build.date = n.text
+              when 3 #時刻
+                build.time = n.text
+              when 4 #担当店名
+                build.place = n.text
+              when 5 #担当店コード
+                build.description = n.text
+              end
+            end
+            build.company = "yamato"
+
+            @details << build.object_to_hash
+          end
+        end
+
         self
       end
 
@@ -66,6 +94,8 @@ module Tracker
         @build.company = "yamato"
         @build.date = Time.now
         @build.place = "" #荷物の場所
+        @build.description = "最新"
+        @details << @build.object_to_hash
 
         self
       end

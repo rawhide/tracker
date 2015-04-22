@@ -9,14 +9,16 @@ describe Tracker::Api::Seinou do
   end
 
   describe "#execute" do
-    context "return json string" do
+    context "ハッシュ配列を返す" do
       subject { seinou.execute }
-      it { should include '"no":"1234123412"' }
-      it { should include '"status":"入力されたお問合せ番号が見当りません"' }
-      it { should include '"company":"seinou"' }
-      it { should include '"place":""' }
-      it { expect(JSON.parse(subject)).to be_key "status" }
-      it { expect(JSON.parse(subject)).to be_key "date" }
+      it { should be_a Array }
+      it { expect(subject[0]).to be_key "no" }
+      it { expect(subject[0]).to be_key "status" }
+      it { expect(subject[0]).to be_key "company" }
+      it { expect(subject[0]).to be_key "place" }
+      it { expect(subject[0]).to be_value "1234123412" }
+      it { expect(subject[0]).to be_value "入力されたお問合せ番号が見当りません" }
+      it { expect(subject[0]).to be_value "seinou" }
     end
   end
 end

@@ -6,7 +6,9 @@ module Tracker # :nodoc:
       #   @return [String] 追跡番号
       # @!attribute build
       #   @return [Tracker::Api::Builder]  解析結果
-      attr_accessor :no, :build
+      # @!attribute details
+      #   @return [Array] 明細行
+      attr_accessor :no, :build, :details
 
       # @!attribute [r] data
       #   @return [Array] 送信パラメータ
@@ -30,11 +32,18 @@ module Tracker # :nodoc:
         @html = nil
         @doc = nil
         @build = nil
+        @details = []
       end
 
       # 追跡番号から荷物の状態を検索する
-      # @return [String] json format string
+      # @return [Array] in objects Tracker::Api::Builder
       # @example
+      # [
+      #   #<Tracker::Api::Builder:0x007fbfd15cfd58>,
+      #   #<Tracker::Api::Builder:0x007fbfd0afa450>,
+      #   #<Tracker::Api::Builder:0x007fbfd148e958>
+      # ]
+      #  :old:
       #   {"no":"123412341231","status":"","date":"2015-04-13 13:49:02 +0900","company":"sagawa","description":"お問い合わせのデータは登録されておりません。","origin":null}
       # 
       def execute
@@ -43,7 +52,8 @@ module Tracker # :nodoc:
         send_data
         parse_data
         format_data
-        @build.to_json
+        #@build.to_json
+        @details
       end
 
       # 検索用のデータをセットする

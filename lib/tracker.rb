@@ -1,6 +1,7 @@
 require "tracker/version"
 require 'tracker/cli'
 require 'json'
+require 'logger'
 
 require 'tracker/api/validation'
 require 'tracker/api/yamato'
@@ -16,7 +17,12 @@ module Tracker # :nodoc:
     # @todo validationの改修
     # @param no [String] 追跡番号
     # @param company [String] 運送会社 (yamato, sawaga, yuusei, seinou)
-    def self.execute(no: nil, company: nil)
+    # @param format [Symbol] (nil[:hash], :json)
+    # @return [Array]
+    #
+    def self.execute(no: nil, company: nil, format: nil)
+      log = Logger.new("log/application.log")
+
       validate = Tracker::Api::Validation.new no: no
       return "number validation error. #{validate.errors.inspect}" if !validate.valid?
 
@@ -29,10 +35,17 @@ module Tracker # :nodoc:
         str = "Tracker::Api::#{c.capitalize}"
         klass = Object.const_get(str)
         a = klass.new no: no
-        data << JSON.parse(a.execute)
+        data << a.execute
       end
 
-      data.to_json
+      str = data.to_json
+      log.info str
+
+      if format == :json
+        data.to_json
+      else
+        data
+      end
     end
   end
 end
