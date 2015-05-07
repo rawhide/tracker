@@ -30,7 +30,9 @@ module Tracker
         self
       end
 
+      # @todo build.date = "#{date}日" これなんとかならないのか
       def parse_data
+        state = ["受 付", "発 送", "中 継", "到 着", "持 出", "配 達"]
         @build = Tracker::Api::Builder.new
         @doc = Nokogiri::HTML.parse(@html, nil, "CP932") do |config|
           config.noblanks
@@ -39,8 +41,33 @@ module Tracker
         @doc.search('table[@summary="お届け状況確認 検索"]').each do |node|
           node.css('tr').each_with_index do |tr, i|
             next if i != 1
+            @build.date = tr.search('td[@class="col2"]').text.strip
             @build.no = tr.search('td[@class="col3"]').text.strip
             @build.status = tr.search('td[@class="col4"]').text.strip
+          end
+        end
+
+        if !@build.date.empty?
+          @doc.search('table[@summary="お届物詳細"]').each do |node|
+            node.css('tr').each do |tr|
+              col1 = tr.css('td[@class="col1"]').text.strip.gsub(/[\u00A0]/, "")
+              col2 = tr.css('td[@class="col2"]').text.strip.gsub(/[\u00A0]/, "")
+              col3 = tr.css('td[@class="col3"]').text.strip.gsub(/[\u00A0]/, "")
+
+              if !col1.empty? && state.include?(col1)
+                build = Tracker::Api::Builder.new
+                build.no = @no
+                build.company = "seinou"
+                build.status = col1
+                build.place = col2
+                date, time = col3.split("日")
+                build.date = "#{date}日"
+                build.time = time
+                build.description = ""
+                @details << build.object_to_hash
+              end
+
+            end
           end
         end
 
@@ -49,7 +76,7 @@ module Tracker
 
       def format_data
         @build.company = "seinou"
-        @build.date = Time.now
+        @build.date ||= Time.now
         @build.place = ""
         @details << @build.object_to_hash
 
