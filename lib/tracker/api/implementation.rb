@@ -38,6 +38,9 @@ module Tracker # :nodoc:
       # 追跡番号から荷物の状態を検索する
       # @return [Array] in objects Tracker::Api::Builder
       # @example
+      #   current:
+      #   [[{"no"=>"1234123400", "status"=>"入力されたお問合せ番号が見当りません", "date"=>"", "time"=>nil, "place"=>"", "company"=>"seinou", "description"=>nil, "origin"=>nil}]]
+      #   old:
       #   [
       #   #<Tracker::Api::Builder:0x007fbfd15cfd58>,
       #   #<Tracker::Api::Builder:0x007fbfd0afa450>,
