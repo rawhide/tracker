@@ -2,7 +2,6 @@ require "tracker/version"
 require 'tracker/cli'
 require 'json'
 require 'logger'
-require 'net/http'
 
 require 'tracker/api/validation'
 require 'tracker/api/yamato'

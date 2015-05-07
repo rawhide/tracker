@@ -1,6 +1,7 @@
 require 'tracker/api/builder'
 require 'tracker/api/implementation'
 require 'nokogiri'
+require 'net/http'
 
 module Tracker
   module Api
