@@ -21,7 +21,7 @@ module Tracker # :nodoc:
     # @return [Array]
     #
     def self.execute(no: nil, company: nil, format: nil)
-      log = Logger.new("log/application.log")
+      log = Logger.new("log/tracker.log")
 
       validate = Tracker::Api::Validation.new no: no
       return "number validation error. #{validate.errors.inspect}" if !validate.valid?
