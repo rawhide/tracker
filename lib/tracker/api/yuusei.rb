@@ -73,6 +73,36 @@ module Tracker
           end
         end
 
+        # 追跡番号がないときは検索結果があるということ
+        if @build.no.to_s.empty?
+          no = ""
+          @doc.search('table[@summary="配達状況詳細"] > tr > td').each_with_index do |node, i|
+            break if i > 0
+            no = node.text.strip.gsub("-", "")
+          end
+
+          # 追跡番号がとれているときは履歴を追う
+          if !no.to_s.empty?
+            @doc.search('table[@summary="履歴情報"]').each do |node|
+              node.css('tr').each do |t|
+                next if t.css('td[@class="w_120"]').text.strip.to_s.empty?
+
+                build = Tracker::Api::Builder.new
+                build.no = @no
+                build.company = 'yuusei'
+                date, time = t.css('td[@class="w_120"]').text.split # 状態発生日
+                build.date = date
+                build.time = time
+                build.status = t.css('td[@class="w_150"]').text # 配送履歴（ステータス）
+                build.description = t.css('td[@class="w_180"]').text # 詳細
+                build.place = t.css('td[@class="w_105"]')[0].text # 取扱局
+                @details << build.object_to_hash
+              end
+            end
+          end
+
+        end
+
         self
       end
 
