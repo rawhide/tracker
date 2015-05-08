@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Tracker::VERSION
   spec.authors       = ["kawashima"]
   spec.email         = ["kawashima@raw-hide.co.jp"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{summary}
+  spec.description   = %q{description}
   spec.homepage      = ""
   spec.license       = "MIT"
 
