@@ -1,4 +1,5 @@
 require 'tracker/api/builder'
+require 'tracker/api/formatter'
 require 'tracker/api/implementation'
 require 'nokogiri'
 require 'net/http'
@@ -93,7 +94,8 @@ module Tracker
 
       def format_data
         @build.company = "yamato"
-        @build.date = Time.now
+        @build.date ||= Date.today.to_s
+        @build.time ||= Time.now.strftime("%H:%M:%S")
         @build.place = "" #荷物の場所
         @build.description = "最新"
         @details << @build.object_to_hash

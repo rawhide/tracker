@@ -1,4 +1,5 @@
 require 'tracker/api/builder'
+require 'tracker/api/formatter'
 require 'tracker/api/implementation'
 require 'nokogiri'
 require 'net/http'
@@ -70,7 +71,8 @@ module Tracker
       # @todo self.placeに荷物の現在地を取得できるのなら取得しておく
       def format_data
         @build.company = "sagawa"
-        @build.date = Time.now
+        @build.date ||= Date.today.to_s
+        @build.time ||= Time.now.strftime("%H:%M:%S")
         @build.place = ""
         #@build.to_json
         @details << @build.object_to_hash

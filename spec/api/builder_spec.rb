@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Tracker::Api::Builder do
-  let(:build) { Tracker::Api::Builder.new no: "123412341234", status: "entry", company: "yamato" }
+  let(:build) { Tracker::Api::Builder.new "no" => "123412341234", "status" => "entry", "company" => "yamato" }
   describe "#object_to_hash" do
     subject { build.object_to_hash }
     it { should be_a Hash }

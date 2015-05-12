@@ -36,6 +36,19 @@ module Tracker # :nodoc:
       end
 
       # 追跡番号から荷物の状態を検索する
+      # @return [Object] self
+      def execute
+        build_param
+        create_form
+        send_data
+        parse_data
+        format_data
+        #@build.to_json
+
+        self
+      end
+
+      # 結果を返す
       # @return [Array] in objects Tracker::Api::Builder
       # @example
       #   current:
@@ -49,14 +62,27 @@ module Tracker # :nodoc:
       #   old:
       #    {"no":"123412341231","status":"","date":"2015-04-13 13:49:02 +0900","company":"sagawa","description":"お問い合わせのデータは登録されておりません。","origin":null}
       # 
-      def execute
-        build_param
-        create_form
-        send_data
-        parse_data
-        format_data
-        #@build.to_json
+
+      def result
         @details
+      end
+
+      # データを統一のフォーマットに変換する
+      # @return [Object] self
+      def make
+        format = Tracker::Api::Formatter.new
+        details = []
+        @details.each do |hash|
+          build = Tracker::Api::Builder.new hash
+          build.copy
+          build.date = format.date(build.date)
+          build.time = format.time(build.time)
+          build.status = format.status(build.status)
+          details << build.object_to_hash
+        end
+        @details = details
+
+        self
       end
 
       # 検索用のデータをセットする

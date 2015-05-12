@@ -9,7 +9,7 @@ describe Tracker do
     end
 
     context "does not run" do
-      subject { Tracker::Base.execute no: "123hoge1234", company: "yamato" }
+      subject { Tracker::Base.execute no: "123hoge1234", company: "yamato", validation: true }
       it { should include "validation error" }
     end
 

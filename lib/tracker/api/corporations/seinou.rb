@@ -1,4 +1,5 @@
 require 'tracker/api/builder'
+require 'tracker/api/formatter'
 require 'tracker/api/implementation'
 require 'nokogiri'
 require 'net/http'
@@ -62,7 +63,7 @@ module Tracker
                 build.status = col1
                 build.place = col2
                 date, time = col3.split("日")
-                build.date = "#{date}日"
+                build.date = "#{Date.today.month}月#{date}日"
                 build.time = time
                 build.description = ""
                 @details << build.object_to_hash
@@ -77,12 +78,14 @@ module Tracker
 
       def format_data
         @build.company = "seinou"
-        @build.date ||= Time.now
+        @build.date ||= Date.today.to_s
+        @build.time ||= Time.now.to_s
         @build.place = ""
         @details << @build.object_to_hash
 
         self
       end
+
     end
   end
 end

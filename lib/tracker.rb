@@ -4,10 +4,10 @@ require 'json'
 require 'logger'
 
 require 'tracker/api/validation'
-require 'tracker/api/yamato'
-require 'tracker/api/sagawa'
-require 'tracker/api/yuusei'
-require 'tracker/api/seinou'
+require 'tracker/api/corporations/yamato'
+require 'tracker/api/corporations/sagawa'
+require 'tracker/api/corporations/yuusei'
+require 'tracker/api/corporations/seinou'
 
 module Tracker # :nodoc:
   # 荷物追跡 
@@ -18,13 +18,16 @@ module Tracker # :nodoc:
     # @param no [String] 追跡番号
     # @param company [String] 運送会社 (yamato, sawaga, yuusei, seinou)
     # @param format [Symbol] (nil[:hash], :json)
+    # @param validation [Symbol] バリーデーションの利用 default: false
     # @return [Array]
     #
-    def self.execute(no: nil, company: nil, format: nil)
+    def self.execute(no: nil, company: nil, format: nil, validation: false)
       log = Logger.new("log/tracker.log")
 
-      validate = Tracker::Api::Validation.new no: no
-      return "number validation error. #{validate.errors.inspect}" if !validate.valid?
+      if validation
+        validate = Tracker::Api::Validation.new no: no
+        return "number validation error. #{validate.errors.inspect}" if !validate.valid?
+      end
 
       data = []
       coms = ["yamato", "sagawa", "yuusei"]
@@ -34,8 +37,9 @@ module Tracker # :nodoc:
       companies.each do |c|
         str = "Tracker::Api::#{c.capitalize}"
         klass = Object.const_get(str)
-        a = klass.new no: no
-        data << a.execute
+        a = klass.new
+        a.no = no
+        data << a.execute.make.result
       end
 
       str = data.to_json
