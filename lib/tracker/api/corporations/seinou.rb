@@ -32,7 +32,7 @@ module Tracker
         self
       end
 
-      # @todo build.date = "#{date}日" これなんとかならないのか
+      # @todo build.date = "date日" これなんとかならないのか
       def parse_data
         state = ["受 付", "発 送", "中 継", "到 着", "持 出", "配 達"]
         @build = Tracker::Api::Builder.new

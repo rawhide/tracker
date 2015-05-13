@@ -6,7 +6,7 @@ module Tracker # :nodoc:
       attr_accessor :no
 
       # @return [String] ステータス
-      # @note {"entry" => "配送中", "reject" => "持戻", "complete" => "完了"}
+      # @note "entry" => "配送中", "reject" => "持戻", "complete" => "完了"
       # @note 各社でそれぞれ対応するものに置き換える
       attr_accessor :status
 
@@ -27,7 +27,7 @@ module Tracker # :nodoc:
       # @return [Hash] フォーマット変換前の自身のオブジェクト
       attr_accessor :origin
 
-      # @param [Hash] {"no" => "12345", "status" => "entry"}
+      # @param args [Hash] "no" => "12345", "status" => "entry"
       # no: nil, status: nil, date: nil, time: nil, place: nil, company: nil, description: nil, enabled: false, origin: nil)
       def initialize(args={})
         @no = args["no"]

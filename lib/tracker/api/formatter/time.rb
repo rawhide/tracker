@@ -2,14 +2,14 @@ module Tracker # :nodoc:
   module Api # :nodoc:
     class Formatter
       class Time
-        # @param [String] 時間
+        # @param str [String] 時間
         # @return [String] H:M:S
         def self.convert(str)
           obj = self.new
           obj.convert str
         end
 
-        # @param [String] 時間
+        # @param str [String] 時間
         # @return [String] H:M:S
         def convert(str)
           str = str.to_s

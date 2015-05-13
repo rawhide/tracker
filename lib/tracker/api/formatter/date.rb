@@ -2,14 +2,14 @@ module Tracker # :nodoc:
   module Api # :nodoc:
     class Formatter # :nodoc:
       class Date
-        # @param [String] 日付
+        # @param str [String] 日付
         # @return [String] m-d
         def self.convert(str)
           obj = self.new
           obj.convert str
         end
 
-        # @param [String] 日付
+        # @param str [String] 日付
         # @return [String] m-d
         def convert(str)
           str, tmp = str.to_s.split

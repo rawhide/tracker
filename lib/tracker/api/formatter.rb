@@ -6,19 +6,19 @@ module Tracker # :nodoc:
   module Api # :nodoc:
     # フォーマットを揃える
     class Formatter
-      # @param [String] 日付
+      # @param str [String] 日付
       # @return [String] m-d
       def date(str)
         Tracker::Api::Formatter::Date.convert str
       end
 
-      # @param [String] 時間
+      # @param str [String] 時間
       # @return [String] H:M:S
       def time(str)
         Tracker::Api::Formatter::Time.convert str
       end
 
-      # @param [String] ステータス
+      # @param str [String] ステータス
       # @return [String] entry, reject, complete
       def status(str)
         Tracker::Api::Formatter::Status.convert str
