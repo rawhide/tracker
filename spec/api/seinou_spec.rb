@@ -32,7 +32,8 @@ describe Tracker::Api::Seinou do
       it { expect(subject[0]).to be_key "company" }
       it { expect(subject[0]).to be_key "place" }
       it { expect(subject[0]).to be_value "1234123412" }
-      it { expect(subject[0]).to be_value "入力されたお問合せ番号が見当りません" }
+      #"入力されたお問合せ番号が見当りません"
+      it { expect(subject[0]).to be_value "該当無し" }
       it { expect(subject[0]).to be_value "seinou" }
     end
   end

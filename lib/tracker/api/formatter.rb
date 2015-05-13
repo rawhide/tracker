@@ -1,3 +1,7 @@
+require 'tracker/api/formatter/date'
+require 'tracker/api/formatter/time'
+require 'tracker/api/formatter/status'
+
 module Tracker # :nodoc:
   module Api # :nodoc:
     # フォーマットを揃える
@@ -5,34 +9,21 @@ module Tracker # :nodoc:
       # @param [String] 日付
       # @return [String] m-d
       def date(str)
-        str, tmp = str.to_s.split
-        str = str.to_s
-        str = str.gsub(/[年月]/, "-").gsub("日", "")
-        str = str.gsub("/", "-")
-        str = str.gsub(/\d{4}-/, "")
-        str = "00-00" if str.empty?
-        str
+        Tracker::Api::Formatter::Date.convert str
       end
 
       # @param [String] 時間
       # @return [String] H:M:S
       def time(str)
-        str = str.to_s
-        if r = str.match(/\d+:\d+:\d+/)
-          str = r[0] 
-        end
-        str = str.gsub(/[時分]/, ":")
-        str = str.gsub("-", ":")
-        str = "00:00:00" if str.empty?
-        str = Time.parse(str).strftime("%H:%M:%S")
-        str
+        Tracker::Api::Formatter::Time.convert str
       end
 
       # @param [String] ステータス
       # @return [String] entry, reject, complete
       def status(str)
-        str
+        Tracker::Api::Formatter::Status.convert str
       end
+
     end
   end
 end

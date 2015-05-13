@@ -45,18 +45,18 @@ module Tracker
             next if i != 1
             @build.date = tr.search('td[@class="col2"]').text.strip
             @build.no = tr.search('td[@class="col3"]').text.strip
-            @build.status = tr.search('td[@class="col4"]').text.strip
+            @build.status = tr.search('td[@class="col4"]').text.strip.gsub(/[\u00A0]/, "").gsub(/\s/, "")
           end
         end
 
         if !@build.date.empty?
           @doc.search('table[@summary="お届物詳細"]').each do |node|
             node.css('tr').each do |tr|
-              col1 = tr.css('td[@class="col1"]').text.strip.gsub(/[\u00A0]/, "")
+              col1 = tr.css('td[@class="col1"]').text.strip.gsub(/[\u00A0]/, "").gsub(/\s/, "")
               col2 = tr.css('td[@class="col2"]').text.strip.gsub(/[\u00A0]/, "")
               col3 = tr.css('td[@class="col3"]').text.strip.gsub(/[\u00A0]/, "")
 
-              if !col1.empty? && state.include?(col1)
+              if !col1.empty? #&& state.include?(col1)
                 build = Tracker::Api::Builder.new
                 build.no = @no
                 build.company = "seinou"
