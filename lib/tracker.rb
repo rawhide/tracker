@@ -30,8 +30,8 @@ module Tracker # :nodoc:
       end
 
       data = []
+      # 運送各社を追加する場合はここ(現状は3社のみ)
       coms = ["yamato", "sagawa", "yuusei"]
-      coms = ["seinou"] if no.length == 10
       companies = company.to_s.empty? ? coms : [company]
 
       companies.each do |c|

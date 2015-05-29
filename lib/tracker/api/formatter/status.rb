@@ -26,12 +26,12 @@ module Tracker # :nodoc:
 
             # seinou
             "受付" => :entry,
-            "発送" => :entry,
+#            "発送" => :entry,
             "中継" => :entry,
             "持出" => :entry,
             "配達" => :entry,
             "配達済みです" => :complete,
-            "持戻" => :reject,
+#            "持戻" => :reject,
             #"入力されたお問合せ番号が見当りません " => :noentry,
 
             # yuusei
