@@ -15,7 +15,7 @@ module Tracker # :nodoc:
             "荷物受付" => :entry,
             "持戻（ご不在）" => :reject,
             "持戻" => :reject,
-            "依頼受付（日・時間帯変更）" => :reject,
+            "依頼受付（日・時間帯変更）" => :entry,
             "配達予定" => :entry,
             "配達完了" => :complete,
             "返品" => :complete,
@@ -32,7 +32,7 @@ module Tracker # :nodoc:
             "配達" => :entry,
             "配達済みです" => :complete,
 #            "持戻" => :reject,
-            #"入力されたお問合せ番号が見当りません " => :noentry,
+            "入力されたお問合せ番号が見当りません" => :noentry,
 
             # yuusei
             "引受" => :entry,
@@ -54,7 +54,7 @@ module Tracker # :nodoc:
         # @param str [String] ステータス
         # @return [String] entry, reject, complete
         def convert(str)
-          Code::STATE[Code::CORPS[str] || :empty]
+          Code::CORPS[str] || :empty
         end
       end
     end
