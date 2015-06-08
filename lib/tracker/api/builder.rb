@@ -23,7 +23,11 @@ module Tracker # :nodoc:
       # @!attribute enabled
       #   @return [Boolean] レコードがゴミデータかどうか
       attr_accessor :date, :time, :place, :company, :description, :enabled
-      
+
+      # @!attribute planned_at
+      #   @return [String] お届け希望日時||お届け予定日時||指定日時
+      attr_accessor :planned_at
+
       # @return [Hash] フォーマット変換前の自身のオブジェクト
       attr_accessor :origin
 
@@ -35,6 +39,7 @@ module Tracker # :nodoc:
         @date = args["date"]
         @time = args["time"]
         @place = args["place"]
+        @planned_at = args["planned_at"]
         @company = args["company"]
         @description = args["description"]
         @enabled = args["enabled"]
