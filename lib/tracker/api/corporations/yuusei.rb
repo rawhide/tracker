@@ -62,7 +62,7 @@ module Tracker
               when 0 # お問合せ番号(追跡番号)
                 @build.no = td.text
               when 1 # 商品種別
-              when 2 # 生年月日
+              when 2 # 最新年月日
               when 3 # 最新状態
                 @build.status = td.text
               when 4 # 最新取扱局
@@ -77,9 +77,18 @@ module Tracker
         # 追跡番号がないときは検索結果があるということ
         if @build.no.to_s.empty?
           no = ""
+          planned_date = ""
           @doc.search('table[@summary="配達状況詳細"] > tr > td').each_with_index do |node, i|
-            break if i > 0
-            no = node.text.strip.gsub("-", "")
+            case i
+            when 0
+              no = node.text.strip.gsub("-", "")
+            when 4
+              planned_date = node.text
+            when 5
+              # 時間指定のみで日にち指定がない場合は日時指定を返さない
+              break if planned_date.empty?
+              @planned_at = planned_date + " " + node.text
+            end
           end
 
           # 追跡番号がとれているときは履歴を追う
@@ -113,6 +122,7 @@ module Tracker
         @build.time ||= Time.now.strftime("%H:%M:%S")
         @build.status ||= ""
         @build.place ||= ""
+        @build.planned_at = @planned_at
 
         @details << @build.object_to_hash
 
