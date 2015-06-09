@@ -67,8 +67,8 @@ module Tracker
           header_node = node.css('tr').first
           data_node = node.css('tr').last
           if header_node && data_node
-            # 「お届け予定日時」「お届け希望日時」を検索する
-            ['お届け予定日時', 'お届け希望日時'].each do |planned_str|
+            # 「お届け希望日時」「お届け予定日時」を検索する
+            ['お届け希望日時', 'お届け予定日時'].each do |planned_str|
               planned_at_index = nil
               header_node.children.each_with_index do |th, i|
                 planned_at_index = i if th.text == planned_str
