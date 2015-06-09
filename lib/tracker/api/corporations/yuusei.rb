@@ -77,17 +77,14 @@ module Tracker
         # 追跡番号がないときは検索結果があるということ
         if @build.no.to_s.empty?
           no = ""
-          planned_date = ""
           @doc.search('table[@summary="配達状況詳細"] > tr > td').each_with_index do |node, i|
             case i
             when 0
               no = node.text.strip.gsub("-", "")
             when 4
-              planned_date = node.text
+              @planned_date = node.text
             when 5
-              # 時間指定のみで日にち指定がない場合は日時指定を返さない
-              break if planned_date.empty?
-              @planned_at = planned_date + " " + node.text
+              @planned_time = node.text
             end
           end
 
@@ -122,7 +119,8 @@ module Tracker
         @build.time ||= Time.now.strftime("%H:%M:%S")
         @build.status ||= ""
         @build.place ||= ""
-        @build.planned_at = @planned_at
+        @build.planned_date = @planned_date
+        @build.planned_time = @planned_time
 
         @details << @build.object_to_hash
 
