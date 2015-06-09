@@ -77,6 +77,7 @@ module Tracker # :nodoc:
           build.copy
           build.date = format.date(build.date)
           build.time = format.time(build.time)
+          build.planned_date = format.planned_date(build.planned_date)
           build.status = format.status(build.status)
           details << build.object_to_hash
         end
