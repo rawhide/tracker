@@ -26,7 +26,7 @@ module Tracker # :nodoc:
 
       # @!attribute planned_at
       #   @return [String] お届け希望日時||お届け予定日時||指定日時
-      attr_accessor :planned_at
+      attr_accessor :planned_at, :planned_date, :planned_time
 
       # @return [Hash] フォーマット変換前の自身のオブジェクト
       attr_accessor :origin
@@ -40,6 +40,8 @@ module Tracker # :nodoc:
         @time = args["time"]
         @place = args["place"]
         @planned_at = args["planned_at"]
+        @planned_date = args["planned_date"]
+        @planned_time = args["planned_time"]
         @company = args["company"]
         @description = args["description"]
         @enabled = args["enabled"]

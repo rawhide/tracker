@@ -75,7 +75,13 @@ module Tracker
               end
               if planned_at_index && planned_at = data_node.children[planned_at_index].text
                 next if planned_at == "-"
-                @planned_at = planned_at
+                # 日付と時間を分解
+                if /(\d{2}\/\d{2})/ =~ planned_at
+                  @planned_date = $1
+                end
+                if /(\d{2}:\d{2}-\d{2}:\d{2})/ =~ planned_at
+                  @planned_time = $1
+                end
                 break
               end
             end
@@ -88,7 +94,8 @@ module Tracker
 
             build = Tracker::Api::Builder.new
             build.no = @no
-            build.planned_at = @planned_at
+            build.planned_date = @planned_date
+            build.planned_time = @planned_time
             tr.css('td').each_with_index do |n, i|
               case i
               when 0 #経過
@@ -109,7 +116,6 @@ module Tracker
             @details << build.object_to_hash
           end
         end
-
         self
       end
 
