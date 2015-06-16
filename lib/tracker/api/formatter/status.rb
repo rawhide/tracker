@@ -9,20 +9,39 @@ module Tracker # :nodoc:
 
           CORPS = {
             # yamato
+            "配達予定" => :entry,
+            "荷受け" => :entry,
+            "海外荷物受付" => :entry,
+            "海外発送" => :entry,
+            "調査中" => :entry,
+            "配送予定" => :entry,
+            "投函予定" => :entry,
+            "荷物受付" => :entry,
+            "依頼受付（再配達）" => :entry,
+            "依頼受付（日・時間帯変更）" => :entry,
+            "依頼受付（保管）" => :entry,
+            "配達日・時間帯指定（保管中）" => :entry,
             "発送" => :entry,
             "作業店通過" => :entry,
+            "配送店到着" => :entry,
             "配達中" => :entry,
-            "荷物受付" => :entry,
-            "持戻（ご不在）" => :reject,
+            "配送中" => :entry,
             "持戻" => :reject,
-            "依頼受付（日・時間帯変更）" => :entry,
-            "配達予定" => :entry,
+            "持戻（ご不在）" => :reject,
+            "持戻（住所不明）" => :reject,
+            "持戻（受取ご辞退）" => :reject,
+#            "持戻（休業）" => :reject,
             "配達完了" => :complete,
+            "投函完了" => :complete,
+            "配送完了" => :complete,
+            "お客様引渡完了" => :complete,
             "返品" => :complete,
+            "調査中（受取ご辞退）" => :complete,
             "伝票番号誤り" => :noentry,
 
             # sagawa
             "伝票番号未登録" => :noentry,
+#            "配達中" => :entry,
             "配達終了" => :complete,
 
             # seinou
@@ -55,6 +74,7 @@ module Tracker # :nodoc:
         # @param str [String] ステータス
         # @return [String] entry, reject, complete
         def convert(str)
+          warn str unless Code::CORPS[str]
           Code::CORPS[str] || :empty
         end
       end
