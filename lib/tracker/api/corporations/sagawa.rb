@@ -49,6 +49,12 @@ module Tracker
           config.noblanks
         end
 
+        @doc.search('div[@class="table_module01 table_okurijo_index scroll"] > table > tbody').each do |node|
+          node.search('tr').each do |tr|
+            @build.status = tr.css('td').last.text
+          end
+        end
+
         @doc.search('div[@class="table_module01 table_okurijo_detail"] > table > tbody').each do |node|
           node.search('tr').each do |tr|
             td = tr.css('td').text
@@ -57,8 +63,8 @@ module Tracker
             case th
             when "お問い合わせNo." #no
               @build.no = td
-            when "配達" #status
-              @build.status = td.strip
+            when "配達" #place
+              @build.place = td.strip
             when "詳細表示" #description
               @build.description = td
             end
@@ -73,8 +79,6 @@ module Tracker
         @build.company = "sagawa"
         @build.date ||= Date.today.to_s
         @build.time ||= Time.now.strftime("%H:%M:%S")
-        @build.place = ""
-        #@build.to_json
         @details << @build.object_to_hash
 
         self
