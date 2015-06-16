@@ -23,6 +23,7 @@ module Tracker # :nodoc:
 
             # sagawa
             "伝票番号未登録" => :noentry,
+            "配達終了" => :complete,
 
             # seinou
             "受付" => :entry,
