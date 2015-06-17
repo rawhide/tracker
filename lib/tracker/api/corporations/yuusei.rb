@@ -56,6 +56,8 @@ module Tracker
           if node.search('tr')[2].css('td').size == 2
             @build.no = node.search('tr')[2].css('td')[0].text
             @build.description = node.search('tr')[2].css('td')[1].text
+            # お問い合せ番号が見つからないケース(配達状況詳細や履歴情報がない)を想定
+            @build.status = @build.description
           else
             node.search('tr')[2].css('td').each_with_index do |td, i|
               case i
