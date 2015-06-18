@@ -76,10 +76,12 @@ module Tracker
 
       # @todo self.placeに荷物の現在地を取得できるのなら取得しておく
       def format_data
-        @build.company = "sagawa"
-        @build.date ||= Date.today.to_s
-        @build.time ||= Time.now.strftime("%H:%M:%S")
-        @details << @build.object_to_hash
+        if @details.size == 0
+          @build.company = "sagawa"
+          @build.date ||= Date.today.to_s
+          @build.time ||= Time.now.strftime("%H:%M:%S")
+          @details << @build.object_to_hash
+        end
 
         self
       end
