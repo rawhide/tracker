@@ -56,6 +56,8 @@ module Tracker
           if node.search('tr')[2].css('td').size == 2
             @build.no = node.search('tr')[2].css('td')[0].text
             @build.description = node.search('tr')[2].css('td')[1].text
+            # お問い合せ番号が見つからないケース(配達状況詳細や履歴情報がない)を想定
+            @build.status = @build.description
           else
             node.search('tr')[2].css('td').each_with_index do |td, i|
               case i
@@ -113,7 +115,7 @@ module Tracker
         self
       end
 
-      def format_data
+      def insert_latest_data
         @build.company = "yuusei"
         @build.date ||= Date.today.to_s
         @build.time ||= Time.now.strftime("%H:%M:%S")
@@ -121,7 +123,6 @@ module Tracker
         @build.place ||= ""
         @build.planned_date = @planned_date
         @build.planned_time = @planned_time
-
         @details << @build.object_to_hash
 
         self

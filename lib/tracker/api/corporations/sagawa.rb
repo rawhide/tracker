@@ -75,7 +75,7 @@ module Tracker
       end
 
       # @todo self.placeに荷物の現在地を取得できるのなら取得しておく
-      def format_data
+      def insert_latest_data
         @build.company = "sagawa"
         @build.date ||= Date.today.to_s
         @build.time ||= Time.now.strftime("%H:%M:%S")

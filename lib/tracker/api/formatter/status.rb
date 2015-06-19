@@ -41,6 +41,7 @@ module Tracker # :nodoc:
 
             # sagawa
             "伝票番号未登録" => :noentry,
+            "お問い合わせNo.をお確かめ下さい。" => :noentry,
 #            "配達中" => :entry,
             "配達終了" => :complete,
 
@@ -58,8 +59,11 @@ module Tracker # :nodoc:
             "引受" => :entry,
             "通過" => :entry,
             "到着" => :entry,
+            "配達希望受付" => :entry,
             "お届け先にお届け済み" => :complete,
             "ご不在のため持ち戻り" => :reject,
+            "＊＊ お問い合わせ番号が見つかりません。お問い合わせ番号をご確認の上、お近くの取扱店にお問い合わせください。" => :noentry,
+            "＊＊ お問い合わせ番号の入力桁数に誤りがあります。11桁から13桁で入力してください。" => :noentry,
           }
         end
 
@@ -74,6 +78,7 @@ module Tracker # :nodoc:
         # @param str [String] ステータス
         # @return [String] entry, reject, complete
         def convert(str)
+          # ステータスがemptyになるケースでワーニングを出す
           warn str unless Code::CORPS[str]
           Code::CORPS[str] || :empty
         end
