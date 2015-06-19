@@ -90,7 +90,7 @@ module Tracker
 
         # 明細行があればすべての明細を取得する
         @doc.search('table[@class="meisai"]').each do |node|
-          node.css('tr').each do |tr|
+          node.css('tr').each_with_index do |tr, i|
 
             build = Tracker::Api::Builder.new
             build.no = @no
@@ -113,13 +113,13 @@ module Tracker
             end
             build.company = "yamato"
 
-            @details << build.object_to_hash
+            @details << build.object_to_hash unless i == 0
           end
         end
         self
       end
 
-      def format_data
+      def insert_latest_data
         @build.company = "yamato"
         @build.date ||= Date.today.to_s
         @build.time ||= Time.now.strftime("%H:%M:%S")

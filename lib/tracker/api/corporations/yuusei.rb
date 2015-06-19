@@ -115,7 +115,7 @@ module Tracker
         self
       end
 
-      def format_data
+      def insert_latest_data
         @build.company = "yuusei"
         @build.date ||= Date.today.to_s
         @build.time ||= Time.now.strftime("%H:%M:%S")
@@ -123,7 +123,6 @@ module Tracker
         @build.place ||= ""
         @build.planned_date = @planned_date
         @build.planned_time = @planned_time
-
         @details << @build.object_to_hash
 
         self
