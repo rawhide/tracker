@@ -76,7 +76,7 @@ module Tracker
         self
       end
 
-      def format_data
+      def insert_latest_data
         @build.company = "seinou"
         @build.date ||= Date.today.to_s
         @build.time ||= Time.now.to_s

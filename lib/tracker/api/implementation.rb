@@ -42,7 +42,7 @@ module Tracker # :nodoc:
         create_form
         send_data
         parse_data
-        format_data
+        insert_latest_data if @details.empty?
         #@build.to_json
 
         self
@@ -119,11 +119,11 @@ module Tracker # :nodoc:
       end
 
       # 解析結果を整形する
-      # @abstract override {#format_data} to implement
+      # @abstract override {#insert_latest_data} to implement
       # @return [Object] self
       # @raise NotImplementedError
-      def format_data
-        raise NotImplementedError, "#format_data"
+      def insert_latest_data
+        raise NotImplementedError, "#insert_latest_data"
       end
     end
   end

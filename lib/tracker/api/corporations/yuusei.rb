@@ -115,9 +115,7 @@ module Tracker
         self
       end
 
-      def format_data
-        return self unless @details.size == 0
-
+      def insert_latest_data
         @build.company = "yuusei"
         @build.date ||= Date.today.to_s
         @build.time ||= Time.now.strftime("%H:%M:%S")
