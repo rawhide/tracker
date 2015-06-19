@@ -120,14 +120,14 @@ module Tracker
       end
 
       def format_data
-        if @details.size == 0
-          @build.company = "yamato"
-          @build.date ||= Date.today.to_s
-          @build.time ||= Time.now.strftime("%H:%M:%S")
-          @build.place = "" #荷物の場所
-          @build.description = "最新"
-          @details << @build.object_to_hash
-        end
+        return self unless @details.size == 0
+
+        @build.company = "yamato"
+        @build.date ||= Date.today.to_s
+        @build.time ||= Time.now.strftime("%H:%M:%S")
+        @build.place = "" #荷物の場所
+        @build.description = "最新"
+        @details << @build.object_to_hash
 
         self
       end

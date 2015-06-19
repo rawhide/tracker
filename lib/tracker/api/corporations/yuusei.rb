@@ -116,16 +116,16 @@ module Tracker
       end
 
       def format_data
-        if @details.size == 0
-          @build.company = "yuusei"
-          @build.date ||= Date.today.to_s
-          @build.time ||= Time.now.strftime("%H:%M:%S")
-          @build.status ||= ""
-          @build.place ||= ""
-          @build.planned_date = @planned_date
-          @build.planned_time = @planned_time
-          @details << @build.object_to_hash
-        end
+        return self unless @details.size == 0
+
+        @build.company = "yuusei"
+        @build.date ||= Date.today.to_s
+        @build.time ||= Time.now.strftime("%H:%M:%S")
+        @build.status ||= ""
+        @build.place ||= ""
+        @build.planned_date = @planned_date
+        @build.planned_time = @planned_time
+        @details << @build.object_to_hash
 
         self
       end
