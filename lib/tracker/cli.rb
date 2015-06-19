@@ -1,5 +1,6 @@
 require 'tracker'
 require 'thor'
+require 'pp'
 
 module Tracker
   class CLI < Thor
@@ -17,6 +18,7 @@ module Tracker
     def trace
       no = options[:number]
       result = Tracker::Base.execute(no: options[:number], company: options[:company])
+      result = ::PP.pp(result,'')
       say("input: #{no}", :red)
       say("output: #{result}", :yellow)
       say("shipping company: #{options[:company]}") if options[:company]
