@@ -41,6 +41,7 @@ module Tracker # :nodoc:
 
             # sagawa
             "伝票番号未登録" => :noentry,
+            "お問い合わせのデータは登録されておりません。" => :noentry,
             "お問い合わせNo.をお確かめ下さい。" => :noentry,
 #            "配達中" => :entry,
             "配達終了" => :complete,
