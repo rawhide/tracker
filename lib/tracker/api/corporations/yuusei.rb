@@ -105,25 +105,14 @@ module Tracker
                 build.status = t.css('td[@class="w_150"]').text # 配送履歴（ステータス）
                 build.description = t.css('td[@class="w_180"]').text # 詳細
                 build.place = t.css('td[@class="w_105"]')[0].text # 取扱局
+                build.planned_date = @planned_date
+                build.planned_time = @planned_time
                 @details << build.object_to_hash
               end
             end
           end
 
         end
-
-        self
-      end
-
-      def insert_latest_data
-        @build.company = "yuusei"
-        @build.date ||= Date.today.to_s
-        @build.time ||= Time.now.strftime("%H:%M:%S")
-        @build.status ||= ""
-        @build.place ||= ""
-        @build.planned_date = @planned_date
-        @build.planned_time = @planned_time
-        @details << @build.object_to_hash
 
         self
       end
