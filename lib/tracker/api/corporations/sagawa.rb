@@ -51,7 +51,8 @@ module Tracker
 
         @doc.search('div[@class="table_module01 table_okurijo_index scroll"] > table > tbody').each do |node|
           node.search('tr').each do |tr|
-            @build.status = tr.css('td').last.text
+            @build.date = tr.css('td[3]').text.strip
+            @build.status = tr.css('td[4]').text
           end
         end
 
@@ -67,6 +68,10 @@ module Tracker
               @build.place = td.strip
             when "詳細表示" #description
               @build.description = td
+              /(\d{4}年\d{2}月\d{2}日)/ =~ td
+              @build.date = $1 || @build.date
+              /(\d{2}:\d{2})/ =~ td
+              @build.time = $1
             end
           end
         end
@@ -77,8 +82,6 @@ module Tracker
       # @todo self.placeに荷物の現在地を取得できるのなら取得しておく
       def insert_latest_data
         @build.company = "sagawa"
-        @build.date ||= Date.today.to_s
-        @build.time ||= Time.now.strftime("%H:%M:%S")
         @details << @build.object_to_hash
 
         self
