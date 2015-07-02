@@ -46,7 +46,13 @@ module Tracker # :nodoc:
             "お問い合わせNo.をお確かめ下さい。" => :noentry,
 #            "配達中" => :entry,
             "配達終了" => :complete,
-
+            "お荷物をお預かり致しました。" => :entry,
+            "を出発致しました。" => :entry,
+            "から配達に出発致しました。" => :entry,
+            "でお預かりしております。" => :entry,
+            "配達は終了致しました。" => :complete,
+            "ご不在でしたので、お預かりしております。" => :reject,
+            
             # seinou
             "受付" => :entry,
 #            "発送" => :entry,
