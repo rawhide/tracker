@@ -35,6 +35,7 @@ module Tracker # :nodoc:
             "配達完了" => :complete,
             "投函完了" => :complete,
             "配送完了" => :complete,
+            "配達完了（宅配ボックス）" => :complete,
             "お客様引渡完了" => :complete,
             "返品" => :complete,
             "調査中（受取ご辞退）" => :complete,
