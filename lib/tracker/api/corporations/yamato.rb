@@ -41,6 +41,7 @@ module Tracker
         @doc = Nokogiri::HTML.parse(@html, nil, "CP932") do |config|
           config.noblanks
         end
+        @order_no = 1
 
         # 最新の情報を取得する
         @doc.search('table[@class="saisin"]').each do |node|
@@ -113,7 +114,9 @@ module Tracker
             end
             build.company = "yamato"
 
+            build.order_no = @order_no
             @details << build.object_to_hash unless i == 0
+            @order_no += 1
           end
         end
         self
@@ -125,6 +128,7 @@ module Tracker
         @build.time ||= Time.now.strftime("%H:%M:%S")
         @build.place = "" #荷物の場所
         @build.description = "最新"
+        @build.order_no = @order_no
         @details << @build.object_to_hash
 
         self
