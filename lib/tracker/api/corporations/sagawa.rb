@@ -33,40 +33,53 @@ module Tracker
         self
       end
 
-      # @todo doc.searchの精査
-      # @example node.search('tr')の順序
-      #   お問い合わせNo. 
-      #   出荷日  
-      #   お預かり  
-      #   お預かり電話番号・FAX番号 
-      #   配達  
-      #   配達電話番号・FAX番号 
-      #   荷物個数  
-      #   詳細表示
       def parse_data
         @build = Tracker::Api::Builder.new
         @doc = Nokogiri::HTML.parse(@html) do |config|
           config.noblanks
         end
 
-        @doc.search('div[@class="table_module01 table_okurijo_index scroll"] > table > tbody').each do |node|
-          node.search('tr').each do |tr|
-            @build.status = tr.css('td').last.text
-          end
-        end
+        @build.company = "sagawa"
+        status = ["お荷物をお預かり致しました。",
+                  "を出発致しました。",
+                  "から配達に出発致しました。",
+                  "でお預かりしております。",
+                  "配達は終了致しました。",
+                  "ご不在でしたので、お預かりしております。",
+                  "お問い合わせNo.をお確かめ下さい。"]
 
         @doc.search('div[@class="table_module01 table_okurijo_detail"] > table > tbody').each do |node|
           node.search('tr').each do |tr|
             td = tr.css('td').text
             th = tr.css('th').text
-
+            
             case th
             when "お問い合わせNo." #no
               @build.no = td
-            when "配達" #place
-              @build.place = td.strip
+
             when "詳細表示" #description
-              @build.description = td
+              tr.css('td').children.each do |item|
+                next unless item.text?
+                @build.description = item.text
+                @build.status = nil
+                @build.place = nil
+                @build.date = @build.description.slice(/(\d{4}年\d{2}月\d{2}日)/)
+                @build.time = @build.description.slice(/(\d{2}:\d{2})/)
+
+                # 営業所とステータスを切り出す
+                desc = @build.description.sub("↑ ", "").sub("⇒/", "").slice(/\s\S+$|^\S+$/).strip
+                status.each do |st|
+                  rp = Regexp.new(st)
+                  if rp === desc
+                    @build.status = $&
+                    @build.place = $`.strip unless $`.empty?
+                  end
+                end
+
+                @details << @build.object_to_hash
+              end
+
+
             end
           end
         end
@@ -77,8 +90,6 @@ module Tracker
       # @todo self.placeに荷物の現在地を取得できるのなら取得しておく
       def insert_latest_data
         @build.company = "sagawa"
-        @build.date ||= Date.today.to_s
-        @build.time ||= Time.now.strftime("%H:%M:%S")
         @details << @build.object_to_hash
 
         self
