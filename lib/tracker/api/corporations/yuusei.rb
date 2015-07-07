@@ -49,6 +49,7 @@ module Tracker
         @doc = Nokogiri::HTML.parse(@html) do |config|
           config.noblanks
         end
+        @order_no = 1
 
         # table[@class="tableType01 txt_c m_b5"]
         @doc.search('table[@summary="照会結果"]').each do |node|
@@ -58,6 +59,7 @@ module Tracker
             @build.description = node.search('tr')[2].css('td')[1].text
             # お問い合せ番号が見つからないケース(配達状況詳細や履歴情報がない)を想定
             @build.status = @build.description
+            @build.order_no = @order_no
           else
             node.search('tr')[2].css('td').each_with_index do |td, i|
               case i
@@ -107,7 +109,9 @@ module Tracker
                 build.place = t.css('td[@class="w_105"]')[0].text # 取扱局
                 build.planned_date = @planned_date
                 build.planned_time = @planned_time
+                build.order_no = @order_no
                 @details << build.object_to_hash
+                @order_no += 1
               end
             end
           end
@@ -116,6 +120,20 @@ module Tracker
 
         self
       end
+
+      def insert_latest_data
+        @build.company = "yuusei"
+        @build.date ||= ""
+        @build.time ||= ""
+        @build.status ||= ""
+        @build.place ||= ""
+        @build.planned_date = @planned_date
+        @build.planned_time = @planned_time
+        @details << @build.object_to_hash
+
+        self
+      end
+
     end
   end
 end

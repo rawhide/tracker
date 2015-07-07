@@ -39,6 +39,7 @@ module Tracker
           config.noblanks
         end
 
+        @build.order_no = 1
         @build.company = "sagawa"
         status = ["お荷物をお預かり致しました。",
                   "を出発致しました。",
@@ -52,7 +53,7 @@ module Tracker
           node.search('tr').each do |tr|
             td = tr.css('td').text
             th = tr.css('th').text
-            
+
             case th
             when "お問い合わせNo." #no
               @build.no = td
@@ -75,8 +76,8 @@ module Tracker
                     @build.place = $`.strip unless $`.empty?
                   end
                 end
-
                 @details << @build.object_to_hash
+                @build.order_no += 1
               end
 
 
