@@ -39,7 +39,7 @@ module Tracker
           config.noblanks
         end
 
-        @build.order_no = 1
+        @order_no = 1
         @build.company = "sagawa"
         status = ["お荷物をお預かり致しました。",
                   "を出発致しました。",
@@ -77,10 +77,14 @@ module Tracker
                   end
                 end
                 @details << @build.object_to_hash
-                @build.order_no += 1
               end
 
-
+              # 佐川の詳細は逆順
+              @order_no = @details.size
+              @details.each do |value|
+                value["order_no"] = @order_no
+                @order_no -= 1
+              end
             end
           end
         end
@@ -91,6 +95,7 @@ module Tracker
       # @todo self.placeに荷物の現在地を取得できるのなら取得しておく
       def insert_latest_data
         @build.company = "sagawa"
+        @build.order_no = @order_no
         @details << @build.object_to_hash
 
         self
