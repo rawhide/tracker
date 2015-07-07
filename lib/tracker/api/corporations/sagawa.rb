@@ -39,6 +39,7 @@ module Tracker
           config.noblanks
         end
 
+        @order_no = 1
         @build.company = "sagawa"
         status = ["お荷物をお預かり致しました。",
                   "を出発致しました。",
@@ -52,7 +53,7 @@ module Tracker
           node.search('tr').each do |tr|
             td = tr.css('td').text
             th = tr.css('th').text
-            
+
             case th
             when "お問い合わせNo." #no
               @build.no = td
@@ -75,11 +76,15 @@ module Tracker
                     @build.place = $`.strip unless $`.empty?
                   end
                 end
-
                 @details << @build.object_to_hash
               end
 
-
+              # 佐川の詳細は逆順
+              @order_no = @details.size
+              @details.each do |value|
+                value["order_no"] = @order_no
+                @order_no -= 1
+              end
             end
           end
         end
@@ -90,6 +95,7 @@ module Tracker
       # @todo self.placeに荷物の現在地を取得できるのなら取得しておく
       def insert_latest_data
         @build.company = "sagawa"
+        @build.order_no = @order_no
         @details << @build.object_to_hash
 
         self

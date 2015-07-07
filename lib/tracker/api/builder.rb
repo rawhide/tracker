@@ -28,6 +28,10 @@ module Tracker # :nodoc:
       #   @return [String] お届け希望日時||お届け予定日時||指定日時
       attr_accessor :planned_date, :planned_time
 
+      # @!attribute order_no
+      #   @return [Fixnum] 詳細の取得順
+      attr_accessor :order_no
+
       # @return [Hash] フォーマット変換前の自身のオブジェクト
       attr_accessor :origin
 
@@ -44,6 +48,7 @@ module Tracker # :nodoc:
         @company = args["company"]
         @description = args["description"]
         @enabled = args["enabled"]
+        @order_no = args["order_no"]
         @origin = args["origin"]
       end
 
