@@ -30,6 +30,7 @@ module Tracker # :nodoc:
             "持戻（ご不在）" => :reject,
             "持戻（住所不明）" => :reject,
             "持戻（受取ご辞退）" => :reject,
+            "持戻（休業）" => :reject,
             "調査中（ご不在）" => :reject,
 #            "持戻（休業）" => :reject,
             "配達完了" => :complete,
