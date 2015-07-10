@@ -24,6 +24,7 @@ module Tracker # :nodoc:
             "発送" => :entry,
             "作業店通過" => :entry,
             "配送店到着" => :entry,
+            "配達店到着" => :entry,
             "配達中" => :entry,
             "配送中" => :entry,
             "持戻" => :reject,
