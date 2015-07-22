@@ -18,8 +18,7 @@ module Tracker # :nodoc:
           end
           str = str.gsub(/[時分]/, ":")
           str = str.gsub("-", ":")
-          str = "00:00:00" if str.empty?
-          str = ::Time.parse(str).strftime("%H:%M:%S")
+          str = ::Time.parse(str).strftime("%H:%M:%S") unless str.empty?
           str
         end
       end
