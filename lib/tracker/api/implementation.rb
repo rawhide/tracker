@@ -75,10 +75,12 @@ module Tracker # :nodoc:
         @details.each do |hash|
           build = Tracker::Api::Builder.new hash
           build.copy
+          build.status = format.status(build.status)
           build.date = format.date(build.date)
           build.time = format.time(build.time)
+          build.place ||= ""
           build.planned_date = format.date(build.planned_date)
-          build.status = format.status(build.status)
+          build.planned_time ||= ""
           details << build.object_to_hash
         end
         @details = details
