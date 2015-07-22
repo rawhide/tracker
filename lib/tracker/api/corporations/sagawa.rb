@@ -39,6 +39,10 @@ module Tracker
           config.noblanks
         end
 
+        ship_date = ""
+        origin_place = ""
+        delivery_place = ""
+
         @order_no = 1
         @build.company = "sagawa"
         status = [
@@ -63,6 +67,12 @@ module Tracker
             when "お問い合わせNo." #no
               @build.no = td
 
+            when "出荷日"
+              ship_date = td.strip
+            when "お預かり"
+              origin_place = td.strip
+            when "配達"
+              delivery_place = td.strip
             when "詳細表示" #description
               tr.css('td').children.each do |item|
                 next unless item.text?
@@ -84,10 +94,17 @@ module Tracker
                 @details << @build.object_to_hash
               end
 
-              # 佐川の詳細は逆順
+              # 佐川の詳細は逆順。順番を直すついでに営業所情報を追加。
               @order_no = @details.size
               @details.each do |value|
                 value["order_no"] = @order_no
+                # 配達営業所
+                value["place"] = delivery_place if value["status"] == "配達は終了致しました。"
+                # 預かり日・営業所
+                if @order_no == 1
+                  value["date"] = ship_date
+                  value["place"] = origin_place
+                end
                 @order_no -= 1
               end
             end
