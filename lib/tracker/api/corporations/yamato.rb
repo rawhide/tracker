@@ -41,7 +41,7 @@ module Tracker
         @doc = Nokogiri::HTML.parse(@html, nil, "CP932") do |config|
           config.noblanks
         end
-        @order_no = 1
+        @order_no = 0
 
         # 最新の情報を取得する
         @doc.search('table[@class="saisin"]').each do |node|
