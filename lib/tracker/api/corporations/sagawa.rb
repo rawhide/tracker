@@ -39,16 +39,22 @@ module Tracker
           config.noblanks
         end
 
+        ship_date = ""
+        origin_place = ""
+        delivery_place = ""
+
         @order_no = 1
         @build.company = "sagawa"
+
+        # 部分一致のため順番に注意。複数ヒットした場合、後に記述したものが適用される。
         status = [
           "伝票番号未登録",
           "お問い合わせのデータは登録されておりません。",
           "お問い合わせNo.をお確かめ下さい。",
           "お荷物をお預かり致しました。",
-          "を出発致しました。",
-          "から配達に出発致しました。",
-          "でお預かりしております。",
+          "出発致しました。",
+          "配達に出発致しました。",
+          "お預かりしております。",
           "配達は終了致しました。",
           "ご不在でしたので、お預かりしております。",
           "お問い合わせNo.をお確かめ下さい。"
@@ -63,6 +69,12 @@ module Tracker
             when "お問い合わせNo." #no
               @build.no = td
 
+            when "出荷日"
+              ship_date = td.strip
+            when "お預かり"
+              origin_place = td.strip
+            when "配達"
+              delivery_place = td.strip
             when "詳細表示" #description
               tr.css('td').children.each do |item|
                 next unless item.text?
@@ -78,16 +90,27 @@ module Tracker
                   rp = Regexp.new(st)
                   if rp === desc
                     @build.status = $&
-                    @build.place = $`.strip unless $`.empty?
+                    unless $`.empty?
+                      place = $`.strip
+                      # 余計な文字を削除
+                      @build.place = place.sub(/から$/, "").sub(/を$/, "").sub(/で$/, "")
+                    end
                   end
                 end
                 @details << @build.object_to_hash
               end
 
-              # 佐川の詳細は逆順
+              # 佐川の詳細は逆順。順番を直すついでに営業所情報を追加。
               @order_no = @details.size
               @details.each do |value|
                 value["order_no"] = @order_no
+                # 配達営業所
+                value["place"] = delivery_place if value["status"] == "配達は終了致しました。"
+                # 預かり日・営業所
+                if @order_no == 1
+                  value["date"] = ship_date
+                  value["place"] = origin_place
+                end
                 @order_no -= 1
               end
             end
