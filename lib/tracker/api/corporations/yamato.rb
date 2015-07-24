@@ -96,8 +96,8 @@ module Tracker
             build.no = @no
             build.planned_date = @planned_date
             build.planned_time = @planned_time
-            tr.css('td').each_with_index do |n, i|
-              case i
+            tr.css('td').each_with_index do |n, j|
+              case j
               when 0 #経過
               when 1 #状態
                 build.status = n.text
