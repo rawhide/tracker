@@ -46,18 +46,10 @@ module Tracker
         @order_no = 1
         @build.company = "sagawa"
 
-        # 部分一致のため順番に注意。複数ヒットした場合、後に記述したものが適用される。
         status = [
-          "伝票番号未登録",
-          "お問い合わせのデータは登録されておりません。",
-          "お問い合わせNo.をお確かめ下さい。",
-          "お荷物をお預かり致しました。",
-          "出発致しました。",
-          "配達に出発致しました。",
-          "お預かりしております。",
-          "配達は終了致しました。",
-          "ご不在でしたので、お預かりしております。",
-          "お問い合わせNo.をお確かめ下さい。"
+          "を出発致しました。",
+          "から配達に出発致しました。",
+          "でお預かりしております。",
         ]
 
         @doc.search('div[@class="table_module01 table_okurijo_detail"] > table > tbody').each do |node|
@@ -86,17 +78,20 @@ module Tracker
 
                 # 営業所とステータスを切り出す
                 desc = @build.description.sub("↑ ", "").sub("⇒/", "").slice(/\s\S+$|^\S+$/).strip
+
+                # 営業所なし
+                @build.status = desc
+
+                # 営業所あり
                 status.each do |st|
                   rp = Regexp.new(st)
                   if rp === desc
-                    @build.status = $&
-                    unless $`.empty?
-                      place = $`.strip
-                      # 余計な文字を削除
-                      @build.place = place.sub(/から$/, "").sub(/を$/, "").sub(/で$/, "")
-                    end
+                    @build.place = $`.strip
+                    # 余計な文字を削除
+                    @build.status = $&.sub(/^から/, "").sub(/^を/, "").sub(/^で/, "")
                   end
                 end
+
                 @details << @build.object_to_hash
               end
 
