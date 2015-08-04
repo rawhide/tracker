@@ -39,7 +39,14 @@ module Tracker # :nodoc:
         klass = Object.const_get(str)
         a = klass.new
         a.no = no
-        data << a.execute.make.result
+
+        # エラーが発生した際に次の配送業者に処理を移す
+        begin
+          data << a.execute.make.result
+        rescue Exception => e
+          data << [{ "no" => no, "company" => c, "error" => "class: #{e.class}, message: #{e.message}" }]
+          next
+        end
       end
 
       str = data.to_json
