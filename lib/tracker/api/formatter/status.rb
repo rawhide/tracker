@@ -34,6 +34,7 @@ module Tracker # :nodoc:
             "持戻（休業）" => :reject,
             "調査中（ご不在）" => :reject,
 #            "持戻（休業）" => :reject,
+            "ご来店予定（保管中）" => :reject,
             "配達完了" => :complete,
             "投函完了" => :complete,
             "配送完了" => :complete,
