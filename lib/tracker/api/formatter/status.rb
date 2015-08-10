@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Tracker # :nodoc:
   module Api # :nodoc:
     class Formatter # :nodoc:
@@ -12,17 +14,17 @@ module Tracker # :nodoc:
         # @param str [String] ステータス
         # @return [String] entry, reject, complete
         # @note entry: 配送中, reject: 持戻, complete: 完了
-        def self.convert(str, com)
+        def self.convert(str, company)
           obj = self.new
-          obj.convert(str, com)
+          obj.convert(str, company)
         end
 
         # @param str [String] ステータス
         # @return [String] entry, reject, complete
-        def convert(str, com)
+        def convert(str, company)
           # ステータスがemptyになるケースでワーニングを出す
-          warn str unless Code::CORPS[com][str]
-          Code::CORPS[com][str] || :empty
+          warn str unless Code::CORPS[company][str]
+          Code::CORPS[company][str] || :empty
         end
       end
     end
