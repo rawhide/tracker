@@ -20,8 +20,8 @@ module Tracker # :nodoc:
 
       # @param str [String] ステータス
       # @return [String] entry, reject, complete
-      def status(str)
-        Tracker::Api::Formatter::Status.convert str
+      def status(str, com)
+        Tracker::Api::Formatter::Status.convert(str, com)
       end
 
     end
