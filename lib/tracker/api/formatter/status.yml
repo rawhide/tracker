@@ -18,6 +18,7 @@ yamato:
   "配達店到着": :entry
   "配達中": :entry
   "配送中": :entry
+  "保管中（ご指定店）": :entry
   "持戻": :reject
   "持戻（ご不在）": :reject
   "持戻（住所不明）": :reject
@@ -34,6 +35,7 @@ yamato:
   "返品": :complete
   "調査中（受取ご辞退）": :complete
   "伝票番号誤り": :noentry
+  "伝票番号未登録": :noentry
 
 sagawa:
   "配達中": :entry
@@ -50,8 +52,13 @@ sagawa:
       
 yuusei:
   "引受": :entry
+  "国際交換局から発送": :entry
+  "国際交換局に到着": :entry
+  "通関手続中": :entry
+  "国際交換局から発送": :entry
   "通過": :entry
   "到着": :entry
+  "持ち出し中": :entry
   "配達希望受付": :entry
   "ご不在のため持ち戻り": :reject
   "お届け先にお届け済み": :complete
