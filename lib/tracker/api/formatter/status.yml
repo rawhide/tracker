@@ -81,15 +81,16 @@ yuusei:
   "持ち出し中": :entry # 消えるステータス
   "調査中": :entry
   "差出人に返送": :entry
-  "差出人に返送済み": :entry
-  
+
   #不在
   "ご不在のため持ち戻り": :reject
   #配達中
+  "配達希望受付": :entry
+
   #完了
   "お届け先にお届け済み": :complete
   "お届け済み": :complete
-  "配達希望受付": :entry
+  "差出人に返送済み": :complete
 
 seinou:
   #未登録
