@@ -72,6 +72,7 @@ yuusei:
   #引受（受付）
   "引受": :entry
   #配送中
+  "発送": :entry
   "通過": :entry
   "到着": :entry
   "国際交換局から発送": :entry
@@ -84,6 +85,7 @@ yuusei:
 
   #不在
   "ご不在のため持ち戻り": :reject
+  "保管": :reject
   #配達中
   "配達希望受付": :entry
 
