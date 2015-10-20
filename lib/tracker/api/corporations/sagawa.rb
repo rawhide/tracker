@@ -77,7 +77,7 @@ module Tracker
                 @build.time = @build.description.slice(/(\d{2}:\d{2})/)
 
                 # 営業所とステータスを切り出す
-                desc = @build.description.sub("↑ ", "").sub("⇒/", "").slice(/\s\S+$|^\S+$/).strip
+                desc = @build.description.sub("↑ ", "").sub("⇒ ", "").slice(/\s\S+$|^\S+$/).strip
 
                 # 営業所なし
                 @build.status = desc
