@@ -28,7 +28,9 @@ yamato:
   "持戻（受取ご辞退）": :reject
   "持戻（休業）": :reject
   "持戻": :reject
+  "持戻（転居）": :reject
   "調査中（ご不在）": :reject
+  "調査中（転居先不明）": :reject
   #配達中
   "依頼受付（再配達）": :entry
   "配達予定": :entry
