@@ -20,9 +20,9 @@ module Tracker # :nodoc:
       #   @return [String] レスポンスHTML
       # @!attribute [r] doc
       #   @return [Nokogiri::HTML::Document] 解析用
-      # 
+      #
       attr :data, :uri, :url, :html, :doc
-  
+
       # @param no [String] 追跡番号
       def initialize(no: nil)
         @no = no

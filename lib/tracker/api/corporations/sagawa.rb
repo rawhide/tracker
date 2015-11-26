@@ -40,82 +40,70 @@ module Tracker
         end
 
         ship_date = ""
-        origin_place = ""
         delivery_place = ""
 
         @order_no = 1
         @build.company = "sagawa"
 
-        status = [
-          "を出発致しました。",
-          "から配達に出発致しました。",
-          "でお預かりしております。",
-        ]
+        # 配送状況概要のテーブル
+        # 再配達希望日時のみ取得する
+        @planned_at = @doc.css('#MainList > tbody > tr:nth-child(4) > td:nth-child(2) > div').text.strip
+        if @planned_at == "―"
+          build.planned_date = nil
+          build.planned_time = nil
+        else
+          # TODO: inoue 再配達のデータが入り次第、以下を修正する
+          #build.planned_date = @planned_date
+          #build.planned_time = @planned_time
+        end
 
-        @doc.search('div[@class="table_module01 table_okurijo_detail"] > table > tbody').each do |node|
+        # 1つめの配送状況詳細のテーブル
+        @doc.search('.table_okurijo_detail').each do |node|
           node.search('tr').each do |tr|
             td = tr.css('td').text
             th = tr.css('th').text
 
             case th
-            when "お問い合わせNo." #no
+            when "お問い合せ送り状NO"
               @build.no = td
-
             when "出荷日"
               ship_date = td.strip
-            when "お預かり"
-              origin_place = td.strip
-            when "配達"
-              delivery_place = td.strip
-            when "詳細表示" #description
-              tr.css('td').children.each do |item|
-                next unless item.text?
-                @build.description = item.text
-                @build.status = nil
-                @build.place = nil
-                @build.date = @build.description.slice(/(\d{4}年\d{2}月\d{2}日)/)
-                @build.time = @build.description.slice(/(\d{2}:\d{2})/)
+            when "配達営業所"
+              delivery_place = td.strip.slice(/.*営業所/)
+            when "詳細表示"
+              # TODO: inoue 番号解析できたら振り分ける
+            end
+          end
+        end
 
-                # 営業所とステータスを切り出す
-                desc = @build.description.sub("↑ ", "").sub("⇒ ", "").slice(/\s\S+$|^\S+$/).strip
+        # 2つめの配送状況詳細のテーブル
+        @doc.search('.table_okurijo_detail2').each do |node|
+          node.css('tr').each_with_index do |tr, i|
 
-                # 営業所なし
-                @build.status = desc
-
-                # 営業所あり
-                status.each do |st|
-                  rp = Regexp.new(st)
-                  if rp === desc
-                    @build.place = $`.strip
-                    # 余計な文字を削除
-                    @build.status = $&.sub(/^から/, "").sub(/^を/, "").sub(/^で/, "")
-                  end
-                end
-
-                @details << @build.object_to_hash
-              end
-
-              # 佐川の詳細は逆順。順番を直すついでに営業所情報を追加。
-              @order_no = @details.size
-              @details.each do |value|
-                value["order_no"] = @order_no
-                # 配達営業所
-                value["place"] = delivery_place if value["status"] == "配達は終了致しました。"
-                # 預かり日・営業所
-                if @order_no == 1
-                  value["date"] = ship_date
-                  value["place"] = origin_place
-                end
-                @order_no -= 1
+            build = Tracker::Api::Builder.new
+            build.no = @no
+            tr.css('td').each_with_index do |n, j|
+              raw_data = n.text.strip
+              case j
+              when 0 # 荷物状況
+                build.status = raw_data.sub("↑", "").sub("⇒", "").sub("↓", "")
+              when 1 # 日時
+                raw_data.match(/\s/)
+                build.date = $`
+                build.time = $'
+              when 2 # 担当営業所
+                build.place = raw_data
               end
             end
+            build.company = "sagawa"
+            build.order_no = i
+            @details << build.object_to_hash
           end
         end
 
         self
       end
 
-      # @todo self.placeに荷物の現在地を取得できるのなら取得しておく
       def insert_latest_data
         @build.company = "sagawa"
         @build.order_no = @order_no
