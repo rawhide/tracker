@@ -82,6 +82,7 @@ module Tracker
 
             build = Tracker::Api::Builder.new
             build.no = @no
+            build.delivery_place = delivery_place
             tr.css('td').each_with_index do |n, j|
               raw_data = n.text.strip
               case j

@@ -66,6 +66,7 @@ module Tracker
               when 0 # お問合せ番号(追跡番号)
                 @build.no = td.text
               when 1 # 商品種別
+                @delivery_type = td.text
               when 2 # 最新年月日
               when 3 # 最新状態
                 @build.status = td.text
@@ -85,6 +86,8 @@ module Tracker
             case i
             when 0
               no = node.text.strip.gsub("-", "")
+            when 1 # 商品種別
+              @delivery_type = node.text
             when 4
               @planned_date = node.text
             when 5
@@ -94,9 +97,23 @@ module Tracker
 
           # 追跡番号がとれているときは履歴を追う
           if !no.to_s.empty?
+            # 配達営業所の取得
+            @doc.search('table[@summary="窓口店"]').each do |node|
+              node.css('tr').each do |t|
+                next if t.css('td[@class="w_105"]').size == 0
+                if t.css('td[@class="w_105"]')[0].text.strip == '配達'
+                  @delivery_place = t.css('td[@class="w_120"]').text # 取扱局
+                end
+              end
+            end
+
             @doc.search('table[@summary="履歴情報"]').each do |node|
               node.css('tr').each do |t|
-                next if t.css('td[@class="w_120"]').text.strip.to_s.empty?
+                if t.css('td[@class="w_120"]').text.strip.to_s.empty?
+                  # 郵便番号 の行の時は最後の行に突っ込む
+                  @details.last['place_code'] = t.css('td[@class="w_105"]').text if @details.size > 0
+                  next
+                end
 
                 build = Tracker::Api::Builder.new
                 build.no = @no
@@ -109,6 +126,8 @@ module Tracker
                 build.place = t.css('td[@class="w_105"]')[0].text # 取扱局
                 build.planned_date = @planned_date
                 build.planned_time = @planned_time
+                build.delivery_type = @delivery_type
+                build.delivery_place = @delivery_place
                 build.order_no = @order_no
                 @details << build.object_to_hash
                 @order_no += 1
@@ -127,8 +146,10 @@ module Tracker
         @build.time ||= ""
         @build.status ||= ""
         @build.place ||= ""
+        @build.place_code ||= ""
         @build.planned_date = @planned_date
         @build.planned_time = @planned_time
+        @build.delivery_type = @delivery_type
         @details << @build.object_to_hash
 
         self

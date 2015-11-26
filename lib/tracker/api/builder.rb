@@ -35,6 +35,14 @@ module Tracker # :nodoc:
       # @return [Hash] フォーマット変換前の自身のオブジェクト
       attr_accessor :origin
 
+      # @!attribute delivery_place
+      #   @return [String] 配達営業所名
+      # @!attribute place_code
+      #   @return [String] 荷物の場所（担当営業所）のコード
+      # @!attribute delivery_type
+      #   @return [String] 郵便・荷物の種類
+      attr_accessor :delivery_place, :place_code, :delivery_type
+
       # @param args [Hash] "no" => "12345", "status" => "entry"
       # no: nil, status: nil, date: nil, time: nil, place: nil, company: nil, description: nil, enabled: false, origin: nil)
       def initialize(args={})
@@ -43,12 +51,15 @@ module Tracker # :nodoc:
         @date = args["date"]
         @time = args["time"]
         @place = args["place"]
+        @place_code = args["place_code"]
         @planned_date = args["planned_date"]
         @planned_time = args["planned_time"]
         @company = args["company"]
         @description = args["description"]
         @enabled = args["enabled"]
         @order_no = args["order_no"]
+        @delivery_place = args["delivery_place"]
+        @delivery_type = args["delivery_type"]
         @origin = args["origin"]
       end
 
