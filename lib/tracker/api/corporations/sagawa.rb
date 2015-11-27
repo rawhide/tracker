@@ -71,7 +71,7 @@ module Tracker
             when "配達営業所"
               delivery_place = td.strip.slice(/.*営業所/)
             when "詳細表示"
-              # TODO: inoue 番号解析できたら振り分ける
+              @build.status = td.strip
             end
           end
         end
