@@ -79,6 +79,9 @@ module Tracker # :nodoc:
           build.date = format.date(build.date)
           build.time = format.time(build.time)
           build.place ||= ""
+          build.place_code ||= ""
+          build.delivery_place ||= ""
+          build.delivery_type ||= ""
           build.planned_date = format.date(build.planned_date)
           build.planned_time ||= ""
           details << build.object_to_hash

@@ -72,6 +72,7 @@ module Tracker
               planned_at_index = nil
               header_node.children.each_with_index do |th, i|
                 planned_at_index = i if th.text == planned_str
+                @delivery_type = data_node.children[i].text if th.text == '商品名'
               end
               if planned_at_index && planned_at = data_node.children[planned_at_index].text
                 next if planned_at == "-"
@@ -96,6 +97,7 @@ module Tracker
             build.no = @no
             build.planned_date = @planned_date
             build.planned_time = @planned_time
+            build.delivery_type = @delivery_type
             tr.css('td').each_with_index do |n, j|
               case j
               when 0 #経過
@@ -109,6 +111,7 @@ module Tracker
                 build.place = n.text
               when 5 #担当店コード
                 build.description = n.text
+                build.place_code = n.text
               end
             end
             build.company = "yamato"
