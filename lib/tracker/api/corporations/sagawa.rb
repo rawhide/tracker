@@ -98,7 +98,7 @@ module Tracker
             end
             build.company = "sagawa"
             build.order_no = i
-            @details << build.object_to_hash
+            @details << build.object_to_hash unless i == 0
           end
         end
 
