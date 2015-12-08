@@ -60,10 +60,12 @@ sagawa:
   "ご不在": :reject
   "持戻り": :reject
   "保管中": :reject
+  "お問合せ": :reject
   #配達中
   "配達中": :entry
   #完了
   "配達完了": :complete
+  "配達完了【宅配BOX】": :complete
 
 yuusei:
   #未登録
