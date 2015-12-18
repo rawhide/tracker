@@ -39,6 +39,7 @@ yamato:
   "配達予定": :entry
   "投函予定": :entry
   "配達中": :entry
+  "国内到着": :entry
   #完了
   "配送完了": :complete
   "投函完了": :complete
@@ -64,6 +65,7 @@ sagawa:
   "お問合せ": :reject
   #配達中
   "配達中": :entry
+  "営業所へお問い合わせください。": :entry
   #完了
   "配達完了": :complete
   "配達完了【宅配BOX】": :complete
