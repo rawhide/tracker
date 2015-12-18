@@ -39,6 +39,7 @@ yamato:
   "配達予定": :entry
   "投函予定": :entry
   "配達中": :entry
+  "国内到着": :entry
   #完了
   "配送完了": :complete
   "投函完了": :complete
@@ -53,6 +54,7 @@ sagawa:
   "伝票番号未登録": :noentry
   "お荷物データが登録されておりません。": :noentry
   "恐れ入りますが、お問い合せ送り状NOをお確かめください。": :noentry
+  "営業所へお問い合わせください。": :noentry
   #引受（受付）
   "集荷": :entry
   #配送中
