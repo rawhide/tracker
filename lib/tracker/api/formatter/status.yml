@@ -10,12 +10,16 @@ yamato:
   "配達日・時間帯指定（保管中）": :entry
   #配送中
   "発送": :entry
+  "通過": :entry
   "作業店通過": :entry
   "配送店到着": :entry
   "配達店到着": :entry
   "依頼受付（店頭受取）": :entry
   "依頼受付（日・時間帯変更）": :entry
   "依頼受付（保管）": :entry
+  "依頼受付（受取方法）": :entry
+  "依頼受付（配達中止）": :entry
+  "依頼受付（転送）": :entry
   "調査中": :entry
   "海外発送": :entry
   "配送予定": :entry
@@ -24,14 +28,17 @@ yamato:
   "配送中": :entry
   "ご来店予定（保管中）": :entry
   "保管中（ご指定店）": :entry
+  "返品（持戻保管中）": :entry
   "転送": :entry
   #不在
   "持戻（ご不在）": :reject
   "持戻（住所不明）": :reject
   "持戻（受取ご辞退）": :reject
   "持戻（休業）": :reject
+  "持戻（ポスト投函不可）": :reject
   "持戻": :reject
   "持戻（転居）": :reject
+  "ご不在（持戻保管中）": :reject
   "調査中（ご不在）": :reject
   "調査中（転居先不明）": :reject
   #配達中
@@ -47,6 +54,7 @@ yamato:
   "配達完了": :complete
   "お客様引渡完了": :complete
   "返品": :complete
+  "返品完了": :complete
   "調査中（受取ご辞退）": :complete
 
 sagawa:
@@ -65,6 +73,7 @@ sagawa:
   "お問合せ": :reject
   #配達中
   "配達中": :entry
+  "営業所受取": :entry
   "営業所へお問い合わせください。": :entry
   #完了
   "配達完了": :complete
@@ -83,6 +92,8 @@ yuusei:
   "到着": :entry
   "国際交換局から発送": :entry
   "国際交換局に到着": :entry
+  "保税運送中": :entry
+  "保税運送到着": :entry
   "通関手続中": :entry
   "国際交換局から発送": :entry
   "持ち出し中": :entry # 消えるステータス
