@@ -89,6 +89,7 @@ yuusei:
   #配送中
   "発送": :entry
   "通過": :entry
+  "通過（車又は船輸送に変更）": :entry
   "到着": :entry
   "国際交換局から発送": :entry
   "国際交換局に到着": :entry
