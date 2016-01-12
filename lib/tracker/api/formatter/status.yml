@@ -21,6 +21,7 @@ yamato:
   "依頼受付（配達中止）": :entry
   "依頼受付（転送）": :entry
   "調査中": :entry
+  "調査中（住所不明）": :entry
   "海外発送": :entry
   "配送予定": :entry
   "配達準備中": :entry
