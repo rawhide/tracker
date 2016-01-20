@@ -31,6 +31,7 @@ yamato:
   "保管中（ご指定店）": :entry
   "返品（持戻保管中）": :entry
   "転送": :entry
+  "保管中": :entry
   #不在
   "持戻（ご不在）": :reject
   "持戻（住所不明）": :reject
