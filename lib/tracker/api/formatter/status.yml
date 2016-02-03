@@ -107,6 +107,7 @@ yuusei:
   "最寄局・最寄店送付": :entry
   "転送": :entry
   "中継": :entry
+  "私書箱保管": :entry
 
   #不在
   "ご不在のため持ち戻り": :reject
