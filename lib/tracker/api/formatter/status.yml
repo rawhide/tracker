@@ -68,10 +68,10 @@ sagawa:
   "集荷": :entry
   #配送中
   "輸送中": :entry
+  "保管中": :entry
   #不在
   "ご不在": :reject
   "持戻り": :reject
-  "保管中": :reject
   "お問合せ": :reject
   #配達中
   "配達中": :entry
