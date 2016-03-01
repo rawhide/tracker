@@ -108,6 +108,7 @@ yuusei:
   "転送": :entry
   "中継": :entry
   "私書箱保管": :entry
+  "保管期間延長受付": :entry
 
   #不在
   "ご不在のため持ち戻り": :reject
