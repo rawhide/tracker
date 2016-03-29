@@ -98,18 +98,17 @@ module Tracker
             build.planned_date = @planned_date
             build.planned_time = @planned_time
             build.delivery_type = @delivery_type
-            tr.css('td').each_with_index do |n, j|
+            tr.css('td' ":not(.image_odd)" ":not(.image_even)" ":not(.image)").each_with_index do |n, j|
               case j
-              when 0 #経過
-              when 1 #状態
+              when 0 #状態
                 build.status = n.text
-              when 2 #日付
+              when 1 #日付
                 build.date = n.text
-              when 3 #時刻
+              when 2 #時刻
                 build.time = n.text
-              when 4 #担当店名
+              when 3 #担当店名
                 build.place = n.text
-              when 5 #担当店コード
+              when 4 #担当店コード
                 build.description = n.text
                 build.place_code = n.text
               end
