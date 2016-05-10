@@ -130,6 +130,7 @@ yuusei:
   "お届け済み": :complete
   "差出人に返送済み": :complete
   "窓口でお渡し": :complete
+  "返送できません": :complete
 
 seinou:
   #未登録
