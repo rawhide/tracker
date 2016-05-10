@@ -32,6 +32,8 @@ yamato:
   "返品（持戻保管中）": :entry
   "転送": :entry
   "保管中": :entry
+  "宅配ボックスお届け準備": :entry
+  "陸・海上切替え": :entry
   #不在
   "持戻（ご不在）": :reject
   "持戻（住所不明）": :reject
@@ -70,6 +72,7 @@ sagawa:
   #配送中
   "輸送中": :entry
   "保管中": :entry
+  "一部配達完了": :entry
   #不在
   "ご不在": :reject
   "持戻り": :reject
@@ -102,6 +105,7 @@ yuusei:
   "輸入申告手続中": :entry
   "国際交換局から発送": :entry
   "税関から名宛人に照会中": :entry
+  "通関完了": :entry
   "持ち出し中": :entry # 消えるステータス
   "調査中": :entry
   "差出人に返送": :entry
@@ -114,10 +118,10 @@ yuusei:
   "中継": :entry
   "私書箱保管": :entry
   "保管期間延長受付": :entry
+  "保管": :entry
 
   #不在
   "ご不在のため持ち戻り": :reject
-  "保管": :reject
   #配達中
   "配達希望受付": :entry
 
