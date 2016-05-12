@@ -34,6 +34,7 @@ yamato:
   "保管中": :entry
   "宅配ボックスお届け準備": :entry
   "陸・海上切替え": :entry
+  "通関完了": :entry
   #不在
   "持戻（ご不在）": :reject
   "持戻（住所不明）": :reject
