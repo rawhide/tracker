@@ -74,6 +74,7 @@ sagawa:
   "輸送中": :entry
   "保管中": :entry
   "一部配達完了": :entry
+  "コンビニ受取": :entry
   #不在
   "ご不在": :reject
   "持戻り": :reject
