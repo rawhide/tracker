@@ -8,6 +8,7 @@ require 'tracker/api/corporations/yamato'
 require 'tracker/api/corporations/sagawa'
 require 'tracker/api/corporations/yuusei'
 require 'tracker/api/corporations/seinou'
+require 'tracker/api/corporations/delivery_provider'
 
 module Tracker # :nodoc:
   # 荷物追跡 
@@ -16,7 +17,7 @@ module Tracker # :nodoc:
     # @todo クラス名を変える
     # @todo validationの改修
     # @param no [String] 追跡番号
-    # @param company [String] 運送会社 (yamato, sawaga, yuusei, seinou)
+    # @param company [String] 運送会社 (yamato, sawaga, yuusei, seinou, delivery_provider)
     # @param format [Symbol] (nil[:hash], :json)
     # @param validation [Symbol] バリーデーションの利用 default: false
     # @return [Array]
@@ -30,12 +31,12 @@ module Tracker # :nodoc:
       end
 
       data = []
-      # 運送各社を追加する場合はここ(現状は3社のみ)
-      coms = ["yamato", "sagawa", "yuusei"]
+      # 運送各社を追加する場合はここ(現状は4社のみ)
+      coms = ["yamato", "sagawa", "yuusei", "delivery_provider"]
       companies = company.to_s.empty? ? coms : [company]
 
       companies.each do |c|
-        str = "Tracker::Api::#{c.capitalize}"
+        str = "Tracker::Api::#{c.split("_").map(&:capitalize).join}"
         klass = Object.const_get(str)
         a = klass.new
         a.no = no
