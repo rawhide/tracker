@@ -1,3 +1,5 @@
+require 'time'
+
 module Tracker # :nodoc:
   module Api # :nodoc:
     class Formatter
